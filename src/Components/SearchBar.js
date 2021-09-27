@@ -8,7 +8,7 @@ const SearchBar = ({keyword,setKeyword}) => {
     <input 
      style={BarStyling}
      key="random1"
-     placeholder={"Search for files"}
+     placeholder={"Search for music 'Artist - Track'"}
      value={keyword}
     />
     &nbsp;
