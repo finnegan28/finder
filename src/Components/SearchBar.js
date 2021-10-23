@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { Component } from "react";
+import axios from "axios";
 
-const SearchBar = ({keyword,setKeyword}) => {
-  const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-  const BtnStyling = {width:"10rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
-  return (
-  <form>
-    <input 
-     style={BarStyling}
-     key="random1"
-     placeholder={"Search for music 'Artist - Track'"}
-     value={keyword}
-    />
-    &nbsp;
-    <input
-        type='submit'
-        style={BtnStyling}
-        onSubmit={(e) => setKeyword(e.target.value)}
-    />
- </form>
-  );
+
+class SearchBar extends Component {
+  state = {
+    search: ""
+  };
+
+  onSearchChange = e => {
+    this.setState({
+      search: e.target.value
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const data = {
+      search: this.state.search
+    };
+    axios      
+      .post("http://127.0.0.1:8080/find", data)      
+      .then(res => console.log(res))      
+      .catch(err => console.log(err));  
+  };
+
+  render() {
+    return (
+      <div className="post">
+        <form className="post" onSubmit={this.handleSubmit}>
+          <input
+            placeholder="Search for music 'Artist - Track'" value={this.state.search}
+            onChange={this.onSearchChange} required
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    );
+  }
 }
 
-export default SearchBar
+export default SearchBar;

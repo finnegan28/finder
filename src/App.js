@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import logo from './logo.gif';
-import SearchPage from './Components/SearchBar.js';
+import SearchBar from './Components/SearchBar.js';
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
               <img src={logo} className="App-logo" alt="logo" />
           <h2> Finder </h2>
         <div className="App">
-          <SearchPage /> 
+          <SearchBar /> 
         </div>
       </header>
     </div>
