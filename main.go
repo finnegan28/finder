@@ -4,8 +4,9 @@ import (
     "fmt"
     "log"
     "net/http"
-
-    "finder/finder"
+    //"encoding/json"
+    "github.com/gorilla/mux"
+    //"io/ioutil"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request){
@@ -14,16 +15,25 @@ func homePage(w http.ResponseWriter, r *http.Request){
 }
 
 func handleRequests() {
-    http.HandleFunc("/", homePage)
+    myRouter := mux.NewRouter().StrictSlash(true)
+
+    myRouter.HandleFunc("/", homePage)
+    myRouter.HandleFunc("/find", returnData).Methods("POST")
+    http.Handle("/", myRouter)
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func returnData(w http.ResponseWriter, r *http.Request){
-    fmt.Println("Endpoint Hit: returnAllArticles")
-    json.NewEncoder(w).Encode(findMusic)
+    if err := r.ParseForm(); err != nil {
+        fmt.Fprintf(w, "ParseForm() err: %v", err)
+        return
+    }
+    search := r.FormValue("search")
+    fmt.Fprintf(w, findMusic(search))
 }
 
 func main() {
-    http.HandleFunc("/find", returnData)
+    fmt.Println("Rest API v2.0 - Mux Routers")
+
     handleRequests()
 }

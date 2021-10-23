@@ -1,17 +1,14 @@
 package main
 
 import (
-    "fmt"
-    "os"
 	"strings"
 
 	"github.com/rocketlaunchr/google-search"
-	"github.com/gocolly/colly/v2"
+	//"github.com/gocolly/colly/v2"
 )
 
-func findMusic() {
-	A := os.Args[1:]
-	searchtext := strings.Join(A," ")
+func findMusic(search string) string {
+	searchtext := search + " "
 	helper := " 'index of/'" + " -unknownsecret.info" + " -wikipedia" + " -sirens.rocks" + " -billboard.com" + " -books.google.com"
 	format := " .mp3"
 	query := searchtext + helper + format
@@ -20,12 +17,13 @@ func findMusic() {
 	if err != nil {
 		panic(err)
 	 }
+
+	 result := ""
 	 for i := 0; i < len(r); i++ {
 		if strings.Contains(r[i].Description, "mp3"){
-			fmt.Println("Printing links from " + r[i].URL)
+			result = result + r[i].URL + "\n"
 			// scrape(r[i].URL)
 		}
 	}
-
+	return result
 }
-
