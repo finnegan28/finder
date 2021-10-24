@@ -12,3 +12,5 @@ Right now the tool is limited to mp3 files and it works surprisingly well. I hav
 The front and backend are now conected and everything is working as a rough prototype.
 
 Next up is to tidy how the results are displayed. Then I will finish the scraper tool to return more exact results.
+
+Front end is currently broken, requests can still be made directly to the go service using postman or similar.
