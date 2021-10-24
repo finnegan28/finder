@@ -13,15 +13,20 @@ class SearchBar extends Component {
     });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
     const data = {
       search: this.state.search
     };
-    axios      
-      .post("http://127.0.0.1:8080/find", data)      
-      .then(res => console.log(res))      
-      .catch(err => console.log(err));  
+    axios
+      .post("http://127.0.0.1:8080/find", data) 
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ data: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -34,6 +39,9 @@ class SearchBar extends Component {
           />
           <button type="submit">Search</button>
         </form>
+        <div>
+        {this.state.data}
+        </div>
       </div>
     );
   }
