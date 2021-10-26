@@ -4,13 +4,29 @@ import (
     "fmt"
     "log"
     "net/http"
-    //"encoding/json"
+    "encoding/json"
+    
     "github.com/gorilla/mux"
-    //"io/ioutil"
 )
 
+type searchText struct {
+	Search string `json:"search"`
+}
+
+func returnData(w http.ResponseWriter, request *http.Request) {
+    var search searchText
+
+    decoder := json.NewDecoder(request.Body)
+	err := decoder.Decode(&search)
+
+	if err != nil {
+		panic(err)
+	}
+
+    fmt.Fprintf(w, findMusic(search.Search))
+}
+
 func homePage(w http.ResponseWriter, r *http.Request){
-    fmt.Fprintf(w, "Welcome to the HomePage!")
     fmt.Println("Endpoint Hit: homePage")
 }
 
@@ -23,17 +39,8 @@ func handleRequests() {
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func returnData(w http.ResponseWriter, r *http.Request){
-    if err := r.ParseForm(); err != nil {
-        fmt.Fprintf(w, "ParseForm() err: %v", err)
-        return
-    }
-    search := r.FormValue("search")
-    fmt.Fprintf(w, findMusic(search))
-}
-
 func main() {
-    fmt.Println("Rest API v2.0 - Mux Routers")
+    fmt.Println("Finder is now running")
 
     handleRequests()
 }
