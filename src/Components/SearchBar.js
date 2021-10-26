@@ -3,25 +3,25 @@ import axios from "axios";
 
 
 class SearchBar extends Component {
-  state = {
-    search: ""
-  };
-
-  onSearchChange = e => {
-    this.setState({
-      search: e.target.value
-    });
-  };
-
-  handleSubmit = (event) => {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      search: ''
+      }                  
+  }
+  
+  handleChange = event =>{
+    this.setState({[event.target.name]: event.target.value});
+  }
+  
+  handleSubmit = event => {
     event.preventDefault();
-    const data = {
-      search: this.state.search
-    };
+
     axios
-      .post("http://127.0.0.1:8080/find", data) 
-      .then((response) => {
-        console.log(response.data);
+      .post("http://127.0.0.1:8080/find", this.state) 
+      .then(response=>{
+        console.log(response);
         this.setState({ data: response.data });
       })
       .catch((error) => {
@@ -30,15 +30,19 @@ class SearchBar extends Component {
   };
 
   render() {
+  const { search } = this.state  
     return (
-      <div className="post">
-        <form className="post" onSubmit={this.handleSubmit}>
+      <div>
+        <form onSubmit={this.handleSubmit}>
           <input
-            placeholder="Search for music 'Artist - Track'" value={this.state.search}
-            onChange={this.onSearchChange} required
-          />
+            placeholder="Search for music 'Artist - Track'"
+            type="text" 
+            name="search" 
+            value={search}
+            onChange={this.handleChange}/>
           <button type="submit">Search</button>
         </form>
+                
         <div>
         {this.state.data}
         </div>
