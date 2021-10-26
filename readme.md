@@ -3,7 +3,7 @@
 
 Finder is an mp3 search engine, built on Go with a ReactJS frontend.
 
-This is an idea I've had for a long time and decided to throw together a small POC.
+This is an idea I've had for a long time and decided to throw together a small POC. Encompassing some search techniques and by taking advantage of directory indexing on poorly setup websites and webapplications, finder is able to traverse these sites and pull in what you search for with high accuracy.
 
 Right now the tool is limited to mp3 files and it works surprisingly well. I have plans to continue development and include many more features, this might eventually include other file formats but for now mp3 will do.
 
